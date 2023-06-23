@@ -1,0 +1,229 @@
+<app-admin-header></app-admin-header>
+<div>
+
+  <app-sidenav></app-sidenav>
+
+  <div class="table-responsive position-fixed top-50 start-50 translate-middle" style="width: 95%;">
+
+
+
+    <div class="mb-2">
+
+      <button class="btn btn-primary" type="button" (click)="addTask=true;"
+      data-bs-toggle="modal" data-bs-target="#myModal">Add new task</button>
+
+
+    </div>
+
+    <!-- table-striped -->
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">Index</th>
+          <th scope="col">Task Subject</th>
+          <th scope="col" class="text-center">Priority</th>
+          <th scope="col" class="text-center">Start Date</th>
+          <th scope="col" class="text-center">Finish Date</th>
+          <th scope="col" class="text-center">Department</th>
+          <th scope="col" class="text-center">Assigned To</th>
+          <th scope="col" class="text-center">Status</th>
+          <th scope="col" class="text-center">Mark as Complete</th>
+          <th scope="col" class="text-center">Delete</th>
+          <th scope="col" class="text-center">Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- | slice
+        : (pagination.currentPage - 1) * pagination.pageSize
+        : pagination.currentPage * pagination.pageSize ;  -->
+        <!-- slice : (pagination.currentPage - 1) * pagination.pageSize : pagination.currentPage * pagination.pageSize; -->
+        <tr *ngFor="let userdata of userDataArray
+        | slice
+        : (pagination.currentPage - 1) * pagination.pageSize
+        : pagination.currentPage * pagination.pageSize; let i = index" [style.background-color]="returnData(i)">
+        <!-- {{i}} -->
+        <td scope="row" class="text-center"> {{i + (pagination.currentPage - 1) * pagination.pageSize}}</td>
+          <!-- {{ userdata | json}} -->
+          <td scope="row" class="text-start">{{userdata.subject}}</td>
+          <td class="text-center" style="font-weight: bold;" [style.background-color]="returnPriorityData(i)">
+            {{userdata.priority}}</td>
+          <td class="text-center">{{userdata.start_date}}</td>
+          <td class="text-center">{{userdata.finish_date}}</td>
+          <td class="text-center">{{userdata.department}}</td>
+          <td class="text-center">{{userdata.assignedTo}}</td>
+          <td class="text-center">{{userdata.status}}</td>
+          <td *ngIf="userdata?.status === 'Pending' ||
+          userdata?.status === 'Ongoing' || userdata?.status === 'Overdue'" class="text-center">
+            <button class="btn btn-success" *ngIf="completedTask" (click)="completeTask(i);
+                  unCheck=true;">Confirm</button>
+          </td>
+          <td *ngIf="userdata?.status === 'Completed'" class="text-center">
+            <!-- <td *ngIf="userdata?.status !== 'Undefined'" class="text-center"> -->
+            <button class="btn btn-secondary" (click)="removeCompletionOfStatus(i);" *ngIf="unCheck">Cancel</button>
+          </td>
+          <td class="text-center"><button class="btn btn-danger" (click)="deleteTask(i)">Delete</button></td>
+          <td class="text-center"><button class="btn btn-primary" type="button" data-bs-toggle="modal"
+              data-bs-target="#myModal" (click)="getUserData(userdata, i);">Update</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <app-pagination
+        #pagination
+        [collectionSize]="userDataArray.length"
+        [pageSize]="5"
+        [firstLastButtons]="true"
+        [maxSize]="2"
+        ></app-pagination>
+      </ul>
+    </nav>
+
+  </div>
+  <app-footer></app-footer>
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="myModal">Update Entry</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+        (click)="taskForm.reset();"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="taskForm">
+          <div class="mb-3">
+            <label for="basic-url" class="form-label">Task Subject</label>
+            <input *ngIf="addTask===false" type="text" class="form-control" placeholder="Task Subject" aria-label="Task Subject"
+              aria-describedby="basic-addon1" formControlName="subject">
+
+            <input *ngIf="addTask" type="text" class="form-control" placeholder="Task Subject" aria-label="Task Subject"
+              aria-describedby="basic-addon1" formControlName="subject">
+
+          </div>
+
+          <!-- input-group  -->
+          <div class="mb-3">
+            <label for="basic-url" class="form-label">Priority</label>
+
+            <select *ngIf="addTask===false" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+              formControlName="priority">
+              <option value="" *ngFor="let option of options" [ngValue]="option">
+                {{ option }}
+              </option>
+            </select>
+
+            <select *ngIf="addTask" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+            formControlName="priority">
+              <option value="" *ngFor="let option of options" [ngValue]="option">
+                {{ option }}
+              </option>
+            </select>
+
+          </div>
+
+          <div class="mb-3">
+            <div class="input-group">
+              <label for="basic-url" class="form-label">Start Date</label>
+              <div class="col-12">
+
+                <div class="input-group" *ngIf="addTask===false">
+                  <input class="form-control" placeholder="Select start date" name="ds" formControlName="start_date"
+                    ngbDatepicker #ds="ngbDatepicker" />
+                  <button class="btn btn-outline-secondary bi bi-calendar3" (click)="ds.toggle()"
+                    type="button"></button>
+                </div>
+
+                <div class="input-group" *ngIf="addTask">
+                  <input class="form-control" placeholder="Select start date" name="ds" formControlName="start_date"
+                    ngbDatepicker #ds="ngbDatepicker" />
+                  <button class="btn btn-outline-secondary bi bi-calendar3" (click)="ds.toggle()"
+                    type="button"></button>
+                </div>
+
+              </div>
+
+              <!-- <div class="mb-3"> -->
+                <label for="basic-url" class="form-label">End Date</label>
+                <div class="col-12">
+
+                  <div class="input-group" *ngIf="addTask===false">
+                    <input class="form-control" placeholder="Select end date" name="de" formControlName="finish_date"
+                      ngbDatepicker #de="ngbDatepicker" />
+                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="de.toggle()"
+                      type="button"></button>
+                  </div>
+
+                  <div class="input-group" *ngIf="addTask">
+                    <input class="form-control" placeholder="Select end date" name="de" formControlName="finish_date"
+                      ngbDatepicker #de="ngbDatepicker" />
+                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="de.toggle()"
+                      type="button"></button>
+                  </div>
+
+                </div>
+              <!-- </div> -->
+            </div>
+
+            <div class="mb-3">
+            <label for="basic-url" class="form-label">Department</label>
+
+              <input *ngIf="addTask===false" type="text" class="form-control" placeholder="Department" aria-label="Department"
+                formControlName="department">
+
+                <input *ngIf="addTask" type="text" class="form-control" placeholder="Department" aria-label="Department"
+                formControlName="department">
+            </div>
+
+            <div class="mb-3">
+              <label for="basic-url" class="form-label">Assigned To</label>
+
+              <input *ngIf="addTask===false" type="text" class="form-control" placeholder="Assigned to" aria-label="Assigned to"
+                formControlName="assignedTo">
+
+                <input *ngIf="addTask" type="text" class="form-control" placeholder="Assigned to" aria-label="Assigned to"
+                formControlName="assignedTo">
+            </div>
+
+            <div class="mb-3">
+              <label for="basic-url" class="form-label">Status</label>
+
+              <select *ngIf="addTask===false" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                formControlName="status">
+                <option value="" *ngFor="let status of statuses" [ngValue]="status">
+                  {{ status }}
+                </option>
+              </select>
+
+              <select *ngIf="addTask" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                formControlName="status">
+                <option value="" *ngFor="let status of statuses" [ngValue]="status">
+                  {{ status }}
+                </option>
+              </select>
+            </div>
+
+          </div>
+        </form>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="taskForm.reset();">Close</button>
+          <button *ngIf="addTask===false" type="button" class="btn btn-primary" (click)="addTask=false; updateTask()" data-bs-dismiss="modal">Update
+            Task</button>
+
+            <button
+              *ngIf="addTask"
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="addNewTask();">
+              Add Task</button>
+        </div>
+      </div>
+    </div>
+  </div>
+

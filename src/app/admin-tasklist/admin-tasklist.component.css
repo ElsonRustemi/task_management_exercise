@@ -1,0 +1,9 @@
+.containertest {
+    border-color: grey;
+    background-color: grey;
+    border-style: solid;
+}
+
+::ng-deep .table {
+  --bs-table-bg: none !important;
+}
