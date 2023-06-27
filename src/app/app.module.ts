@@ -14,6 +14,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { PaginationComponent } from './admin-tasklist/pagination/pagination.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PaginationComponent } from './admin-tasklist/pagination/pagination.comp
     SidenavComponent,
     HomeComponent,
     AboutComponent,
-    PaginationComponent
+    PaginationComponent,
+    LoginComponent
   ],
   imports: [
     FormsModule,

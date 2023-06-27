@@ -4,6 +4,7 @@ import { AdminTasklistComponent } from './admin-tasklist/admin-tasklist.componen
 import { HomeComponent } from './home/home.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { AboutComponent } from './about/about.component';
+import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
@@ -11,7 +12,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {path: 'home/tasks', component: AdminTasklistComponent},
   {path: 'home/about', component: AboutComponent},
-
+  {path: 'login', component: LoginComponent},
   {path: 'sidenav', component: SidenavComponent},
 
 ];
