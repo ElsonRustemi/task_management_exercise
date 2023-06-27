@@ -1,16 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { UserDataService } from '../user-data.service';
 import { User } from '../user.interface';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 import {
-  NgbAlertModule,
-  NgbDate,
   NgbDateParserFormatter,
   NgbDatepickerModule,
   NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-
 
 @Component({
   selector: 'app-admin-tasklist',
@@ -35,21 +32,24 @@ export class AdminTasklistComponent implements OnInit {
     status: ['']
   });
 
+  // Starding date variables
   yearStart?: number;
   monthStart?: number;
   dateStart?:number;
 
+  // Ending date variables
   yearFinish?: number;
   monthFinish?: number;
   dateFinish?:number;
 
+  //
   updateTaskForm!: object;
 
   // Modal variables
   model?: NgbDateStruct;
   model1?: NgbDateStruct;
 
-  //
+  // Arrays with values used on dropdown
   options: string[] = [];
   statuses: string[] = [];
 
@@ -57,9 +57,7 @@ export class AdminTasklistComponent implements OnInit {
   taskIndex!: number;
   userDataArray!: User[];
 
-  // pageSize: number = 25;
-  // page: number = 4;
-
+  paginationIndex!: number;
 
   constructor(
     private serviceUserData: UserDataService,
@@ -80,6 +78,9 @@ export class AdminTasklistComponent implements OnInit {
     ]
   }
 
+  /**
+   * HOOK onInit
+   */
   ngOnInit() {
     this.getTasks();
   }
@@ -90,7 +91,6 @@ export class AdminTasklistComponent implements OnInit {
   getTasks() {
     this.userDataArray = this.serviceUserData.userInfo;
     console.log(this.userDataArray);
-
     return this.userDataArray;
   }
 
@@ -117,8 +117,6 @@ export class AdminTasklistComponent implements OnInit {
       status: updateTaskForm.status
     }
 
-
-    // this.serviceUserData.serviceAddTask(this.taskForm.value);
     this.serviceUserData.serviceAddTask(updateTaskFormFinal);
     this.taskForm.reset();
   }
@@ -136,8 +134,8 @@ export class AdminTasklistComponent implements OnInit {
    * Sets status to 'Completed'
    * @param i
    */
-  completeTask(i: number) {
-    this.serviceUserData.serviceCompleteTask(i);
+  completeTask() {
+    this.serviceUserData.serviceCompleteTask(this.paginationIndex);
   }
 
   /**

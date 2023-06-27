@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, SimpleChanges, } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
@@ -6,6 +6,7 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
   styleUrls: ['./pagination.component.css']
 })
 export class PaginationComponent implements OnInit {
+
   /** The total number of records */
   @Input()
   collectionSize = 0;
@@ -36,7 +37,8 @@ export class PaginationComponent implements OnInit {
 
   totalPages: any[] = [];
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit(): void {
     this.totalPages = new Array(Math.ceil(this.collectionSize / this.pageSize));

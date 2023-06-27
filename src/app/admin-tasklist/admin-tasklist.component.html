@@ -33,19 +33,16 @@
         </tr>
       </thead>
       <tbody>
-        <!-- | slice
+
+        <tr *ngFor=" let userdata of userDataArray | slice
         : (pagination.currentPage - 1) * pagination.pageSize
-        : pagination.currentPage * pagination.pageSize ;  -->
-        <!-- slice : (pagination.currentPage - 1) * pagination.pageSize : pagination.currentPage * pagination.pageSize; -->
-        <tr *ngFor="let userdata of userDataArray
-        | slice
-        : (pagination.currentPage - 1) * pagination.pageSize
-        : pagination.currentPage * pagination.pageSize; let i = index" [style.background-color]="returnData(i)">
-        <!-- {{i}} -->
-        <td scope="row" class="text-center"> {{i + (pagination.currentPage - 1) * pagination.pageSize}}</td>
-          <!-- {{ userdata | json}} -->
+        : (pagination.currentPage - 1) * pagination.pageSize + pagination.pageSize ; let i = index;"
+        [style.background-color]="returnData(i + ((pagination.currentPage - 1) * pagination.pageSize))">
+
+          <td scope="row" class="text-center"> {{i + ((pagination.currentPage - 1) * pagination.pageSize) + 1}}</td>
           <td scope="row" class="text-start">{{userdata.subject}}</td>
-          <td class="text-center" style="font-weight: bold;" [style.background-color]="returnPriorityData(i)">
+          <td class="text-center" style="font-weight: bold;"
+            [style.background-color]="returnPriorityData(i + ((pagination.currentPage - 1) * pagination.pageSize))">
             {{userdata.priority}}</td>
           <td class="text-center">{{userdata.start_date}}</td>
           <td class="text-center">{{userdata.finish_date}}</td>
@@ -54,22 +51,23 @@
           <td class="text-center">{{userdata.status}}</td>
           <td *ngIf="userdata?.status === 'Pending' ||
           userdata?.status === 'Ongoing' || userdata?.status === 'Overdue'" class="text-center">
-            <button class="btn btn-success" *ngIf="completedTask" (click)="completeTask(i);
+            <button class="btn btn-success" *ngIf="completedTask" (click)="paginationIndex = (i + ((pagination.currentPage - 1) * pagination.pageSize)); completeTask();
                   unCheck=true;">Confirm</button>
           </td>
           <td *ngIf="userdata?.status === 'Completed'" class="text-center">
             <!-- <td *ngIf="userdata?.status !== 'Undefined'" class="text-center"> -->
-            <button class="btn btn-secondary" (click)="removeCompletionOfStatus(i);" *ngIf="unCheck">Cancel</button>
+            <button class="btn btn-secondary" (click)="removeCompletionOfStatus((i + ((pagination.currentPage - 1) * pagination.pageSize)));" *ngIf="unCheck">Cancel</button>
           </td>
-          <td class="text-center"><button class="btn btn-danger" (click)="deleteTask(i)">Delete</button></td>
+          <td class="text-center"><button class="btn btn-danger" (click)="deleteTask((i + ((pagination.currentPage - 1) * pagination.pageSize)))">Delete</button></td>
           <td class="text-center"><button class="btn btn-primary" type="button" data-bs-toggle="modal"
-              data-bs-target="#myModal" (click)="getUserData(userdata, i);">Update</button></td>
+              data-bs-target="#myModal" (click)="getUserData(userdata, (i + ((pagination.currentPage - 1) * pagination.pageSize)));">Update</button></td>
         </tr>
       </tbody>
     </table>
 
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
+
         <app-pagination
         #pagination
         [collectionSize]="userDataArray.length"
@@ -77,6 +75,7 @@
         [firstLastButtons]="true"
         [maxSize]="2"
         ></app-pagination>
+
       </ul>
     </nav>
 
