@@ -152,6 +152,7 @@ export class AdminTasklistComponent implements OnInit {
    * @returns
    */
   returnData(i: number): any {
+
     if (this.unCheck) {
       return this.userDataArray[i]?.status === 'Completed' ? '#7AA874' :
         this.userDataArray[i]?.priority === 'In Progress' ? '#F5F0BB' :
