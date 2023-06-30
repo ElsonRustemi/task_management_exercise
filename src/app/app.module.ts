@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { PaginationComponent } from './admin-tasklist/pagination/pagination.component';
 import { LoginComponent } from './login/login.component';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LoginComponent } from './login/login.component';
     HomeComponent,
     AboutComponent,
     PaginationComponent,
-    LoginComponent
+    LoginComponent,
+    CardComponent
   ],
   imports: [
     FormsModule,

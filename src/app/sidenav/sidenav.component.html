@@ -25,15 +25,15 @@
               <i class="bi bi-people mx-3"></i>Users</a>
           </li>
           <li class="nav-item mt-2">
-            <a class="nav-link active" aria-current="page" href="#" routerLink="home/tasks" data-bs-dismiss="offcanvas">
+            <a class="nav-link active" aria-current="page" href="#" [routerLink]="['home/tasks']" data-bs-dismiss="offcanvas">
               <i class="bi bi-list-task mx-3" ></i>Manage Tasks</a>
           </li>
           <li class="nav-item mt-2">
-            <a class="nav-link active" aria-current="page" href="#" routerLink="home/about" data-bs-dismiss="offcanvas">
+            <a class="nav-link active" aria-current="page" href="#" [routerLink]="['home/about']" data-bs-dismiss="offcanvas">
               <i class="bi bi-info-circle mx-3"></i>About</a>
           </li>
           <li class="nav-item mt-2">
-            <a class="nav-link active" aria-current="page" href="#" routerLink="/login" data-bs-dismiss="offcanvas">
+            <a class="nav-link active" aria-current="page" href="#" [routerLink]="['/login']" data-bs-dismiss="offcanvas">
               <i class="bi bi-door-open mx-3"></i>Logout</a>
           </li>
         </ul>
