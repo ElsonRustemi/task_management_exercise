@@ -13,10 +13,10 @@ export class AdminHeaderComponent {
   constructor(private router: Router) { 
     this.href = this.router.url;
     console.log(this.href);
+    
   }
 
   goToHome() {
-    console.log("clicked");
     this.router.navigate(['/home']);
   }
 
