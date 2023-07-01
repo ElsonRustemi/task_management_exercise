@@ -4,10 +4,8 @@
 <div>
   <div class="table-responsive position-fixed top-50 start-50 translate-middle" style="width: 95%;">
     <div class="mb-2">
-
       <button class="btn btn-primary" type="button" (click)="addTask=true;" data-bs-toggle="modal"
         data-bs-target="#myModal">Add new task</button>
-
     </div>
 
     <!-- table-striped -->
@@ -67,10 +65,8 @@
 
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
-
         <app-pagination #pagination [collectionSize]="userDataArray.length" [pageSize]="5" [firstLastButtons]="true"
           [maxSize]="2"></app-pagination>
-
       </ul>
     </nav>
 

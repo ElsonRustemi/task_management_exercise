@@ -4,6 +4,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from  '@angular/common/http';
+
+
+
 import { AppComponent } from './app.component';
 import { AdminTasklistComponent } from './admin-tasklist/admin-tasklist.component';
 import { AdminHeaderComponent } from './admin-header/admin-header.component';
@@ -13,6 +17,8 @@ import { AboutComponent } from './about/about.component';
 import { PaginationComponent } from './admin-tasklist/pagination/pagination.component';
 import { LoginComponent } from './login/login.component';
 import { CardComponent } from './card/card.component';
+import { UsersComponent } from './users/users.component';
+
 
 @NgModule({
   declarations: [
@@ -24,14 +30,16 @@ import { CardComponent } from './card/card.component';
     AboutComponent,
     PaginationComponent,
     LoginComponent,
-    CardComponent
+    CardComponent,
+    UsersComponent
   ],
   imports: [
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
     NgbModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
