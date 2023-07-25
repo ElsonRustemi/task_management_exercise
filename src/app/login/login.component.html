@@ -1,17 +1,20 @@
 
 <div class="position-absolute top-50 start-50 translate-middle mb-3">
-    <form>
+    <form [formGroup]="loginForm">
         <h1 class="display-6">Sign In</h1>
         <div class="form-floating mb-3">
-            <input type="email" class="form-control form-control-lg" id="floatingInput" placeholder="name@example.com">
+            <input type="email" class="form-control form-control-lg" id="floatingInput" placeholder="name@example.com"
+            formControlName="email">
             <label for="floatingInput">Email address</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="password" class="form-control form-control-lg" id="floatingPassword" placeholder="Password">
+            <input type="password" class="form-control form-control-lg" id="floatingPassword" placeholder="Password"
+            formControlName="password">
             <label for="floatingPassword">Password</label>
         </div>
         <div class="d-flex justify-content-end mb-3">
-            <button type="button" class="btn btn-primary" [routerLink]="['/']">Login</button>
+            <button type="button" class="btn btn-primary"
+            (click)="login()">Login</button>
         </div>
     </form>
 </div>
