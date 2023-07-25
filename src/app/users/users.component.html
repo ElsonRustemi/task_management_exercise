@@ -1,0 +1,77 @@
+<app-admin-header></app-admin-header>
+
+
+<div>
+    <div class="table-responsive position-fixed top-50 start-50 translate-middle" style="width: 95%;">
+        <div class="mb-2">
+            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                data-bs-target="#userModal">Add new user</button>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Fullname</th>
+                    <th scope="col" class="text-center">Email</th>
+                    <th scope="col" class="text-center">Field of study</th>
+                    <th scope="col" class="text-center">Year</th>
+                    <th scope="col" class="text-center">View</th>
+                    <th scope="col" class="text-center">Update</th>
+                    <th scope="col" class="text-center">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users; let i = index;">
+                    <td class="text-center">{{user.fullname}}</td>
+                    <td class="text-center">{{user.email}}</td>
+                    <td class="text-center">{{user.field_of_study}}</td>
+                    <td class="text-center">{{user.year}}</td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-info">View</button>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-primary">Update</button>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="formGroupExampleInput" class="form-label">Fullname</label>
+                    <input type="text" class="form-control " id="fullname" placeholder="Fullname">
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput" class="form-label">Email</label>
+                    <input type="email" class="form-control " id="email" placeholder="Email">
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput" class="form-label">Field of study</label>
+                    <input type="text" class="form-control" id="fieldOfStudy" placeholder="Field of study">
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput" class="form-label">Year</label>
+                    <input type="text" class="form-control " id="year" placeholder="Year">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Add User</button>
+            </div>
+        </div>
+    </div>
+</div>

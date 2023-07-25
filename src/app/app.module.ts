@@ -4,40 +4,42 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from  '@angular/common/http';
+
+
+
 import { AppComponent } from './app.component';
-import { UserTasklistComponent } from './user-tasklist/user-tasklist.component';
-import { UserHeaderComponent } from './user-header/user-header.component';
 import { AdminTasklistComponent } from './admin-tasklist/admin-tasklist.component';
 import { AdminHeaderComponent } from './admin-header/admin-header.component';
 import { FooterComponent } from './footer/footer.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { PaginationComponent } from './admin-tasklist/pagination/pagination.component';
 import { LoginComponent } from './login/login.component';
 import { CardComponent } from './card/card.component';
+import { UsersComponent } from './users/users.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserTasklistComponent,
-    UserHeaderComponent,
     AdminTasklistComponent,
     AdminHeaderComponent,
     FooterComponent,
-    SidenavComponent,
     HomeComponent,
     AboutComponent,
     PaginationComponent,
     LoginComponent,
-    CardComponent
+    CardComponent,
+    UsersComponent
   ],
   imports: [
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
     NgbModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
