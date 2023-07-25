@@ -2,7 +2,7 @@ export class User {
     id!: number;
     fullname!: string;
     email!: string;
-    field_of_study!: string;
+    fieldOfStudy!: string;
     year!: number;
 }
 

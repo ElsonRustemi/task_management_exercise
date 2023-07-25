@@ -1,32 +1,25 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "fullname": "John Doe",
-            "email": "j@d.com",
-            "field_of_study": "CS",
-            "year": "2"
-        },
-        {
-            "id": 2,
-            "fullname": "Mary Doe",
-            "email": "m@d.com",
-            "field_of_study": "Telecomunication",
-            "year": "3"
-        },
-        {
-            "id": 3,
-            "fullname": "Jack Smallings",
-            "email": "j@s.com",
-            "field_of_study": "IT",
-            "year": "1"
-        },
-        {
-            "id": 4,
-            "fullname": "Terry Smith",
-            "email": "t@s.com",
-            "field_of_study": "Design",
-            "year": "5"
-        }
-    ]
+  "users": [
+    {
+      "fullname": "John Doe",
+      "email": "j@d.com",
+      "fieldOfStudy": "CS",
+      "year": "2",
+      "id": 1
+    },
+    {
+      "fullname": "Mary Doe",
+      "email": "m@d.com",
+      "fieldOfStudy": "Science",
+      "year": "2",
+      "id": 2
+    },
+    {
+      "fullname": "Ben Johnson",
+      "email": "b@j.com",
+      "fieldOfStudy": "Agriculture",
+      "year": "3",
+      "id": 3
+    }
+  ]
 }
