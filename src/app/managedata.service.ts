@@ -7,10 +7,45 @@ import { Observable } from 'rxjs';
 })
 export class ManagedataService {
 
+  // Body of URL to make request
+  url: string = 'http://localhost:3000/users'
+
   constructor(private http: HttpClient) { }
 
+  /**
+   *
+   * @returns List of all users on the db
+   */
   getUsers(): Observable<any> {
-    return this.http.get('http://localhost:3000/users')
+    return this.http.get(this.url)
+  }
+
+  /**
+   * Service to add new user
+   * @param user
+   * @returns
+   */
+  addUser(user: any): Observable<any> {
+    return this.http.post(this.url, user);
+  }
+
+  /**
+   *
+   * @param i Index of user selected data
+   * @param user Object of new user info
+   * @returns New user info data
+   */
+  updateUser(id: number, user: any): Observable<any> {
+    return this.http.put(this.url + '/' + id, user);
+  }
+
+  /**
+   *
+   * @param id
+   * @returns
+   */
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(this.url + '/' + id);
   }
 
 
