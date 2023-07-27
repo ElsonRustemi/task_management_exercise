@@ -1,4 +1,49 @@
-<nav class="navbar navbar navbar-expand-md navbar-dark bg-primary fixed-top" style="justify-content: start;">
-    <img src="assets/logo/angular.png" style="width: 55px;">
-    <a class="navbar-brand" href="#" style="margin-left: 10px;">Better Task Management System (Admin View)</a>
+
+
+<nav class="navbar bg-body-tertiary fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand flex justify-content-start" href="#" style="color: white;">
+            <img src="assets/logo/angular.png" style="width: 55px; cursor: pointer;" (click)="goToHome()">
+                Better Task Management System (Admin View)
+
+                
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            *ngIf="this.href !== '/'"
+            aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="margin-top: 70px;">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Side menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 mt">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#" [routerLink]="['home']" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-house mx-3" ></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#" [routerLink]="['home/users']" data-bs-dismiss="offcanvas">
+                            <i class="bi bi-people mx-3"></i>Users</a>
+                    </li>
+                    <li class="nav-item mt-2">
+                        <a class="nav-link active" aria-current="page" href="#" [routerLink]="['home/tasks']" data-bs-dismiss="offcanvas">
+                            <i class="bi bi-list-task mx-3"></i>Manage Tasks</a>
+                    </li>
+                    <li class="nav-item mt-2">
+                        <a class="nav-link active" aria-current="page" href="#" [routerLink]="['home/about']" data-bs-dismiss="offcanvas">
+                            <i class="bi bi-info-circle mx-3"></i>About</a>
+                    </li>
+                    <li class="nav-item mt-2">
+                        <a class="nav-link active" aria-current="page" href="#" [routerLink]="['/login']" data-bs-dismiss="offcanvas">
+                            <i class="bi bi-door-open mx-3"></i>Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </nav>
+
+<router-outlet></router-outlet>

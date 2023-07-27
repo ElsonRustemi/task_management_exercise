@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AppComponent {
   title = 'diplomaproject';
+  href!: string;
 
   constructor(private modalService: NgbModal) {
   }

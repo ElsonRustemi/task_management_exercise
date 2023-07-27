@@ -1,0 +1,146 @@
+<app-admin-header></app-admin-header>
+
+
+<div>
+  <div class="table-responsive position-fixed top-50 start-50 translate-middle" style="width: 95%;">
+    <div class="mb-2">
+      <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#userModal"
+      (click)="addUser=true; viewUsers=false; updateUsers=false">Add new
+        user</button>
+    </div>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">Fullname</th>
+          <th scope="col" class="text-center">Email</th>
+          <th scope="col" class="text-center">Field of study</th>
+          <th scope="col" class="text-center">Year</th>
+          <th scope="col" class="text-center">View</th>
+          <th scope="col" class="text-center">Update</th>
+          <th scope="col" class="text-center">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index;">
+          <td class="text-center">{{user.fullname}}</td>
+          <td class="text-center">{{user.email}}</td>
+          <td class="text-center">{{user.fieldOfStudy}}</td>
+          <td class="text-center">{{user.year}}</td>
+          <td class="text-center">
+            <button type="button" class="btn btn-info"
+            (click)="viewUsers=true;addUser=false;updateUsers=false;viewUserData(user);"
+              data-bs-toggle="modal" data-bs-target="#userModal">View</button>
+          </td>
+          <td class="text-center">
+            <button type="button" class="btn btn-primary"
+            (click)="updateUsers=true; addUser=false; viewUsers=false; updateUserRecord(user, i);"
+            data-bs-toggle="modal" data-bs-target="#userModal">Update</button>
+          </td>
+          <td class="text-center">
+            <button type="button" class="btn btn-danger" (click)="deleteUserModal(i, user.fullname)"
+            data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          {{addUser ? 'Add User' : viewUsers ? 'View User' : 'Update User'}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" [formGroup]="userForm">
+          <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Fullname</label>
+            <!-- Add -->
+            <input *ngIf="addUser" type="text" class="form-control " id="fullname" placeholder="Fullname"
+              formControlName="fullname">
+            <!-- View -->
+            <fieldset [disabled]="true">
+              <input *ngIf="viewUsers" type="text" class="form-control " id="fullname" formControlName="fullname">
+            </fieldset>
+            <!-- Update -->
+            <input *ngIf="updateUsers" type="text" class="form-control " id="fullname" formControlName="fullname">
+          </div>
+          <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Email</label>
+            <!-- Add -->
+            <input *ngIf="addUser" type="email" class="form-control " id="email" placeholder="Email"
+              formControlName="email">
+            <!-- View -->
+            <fieldset [disabled]="true">
+              <input *ngIf="viewUsers" type="email" class="form-control " id="email"
+                formControlName="email">
+            </fieldset>
+            <!-- Update -->
+            <input *ngIf="updateUsers" type="email" class="form-control " id="email"
+                formControlName="email">
+          </div>
+          <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Field of study</label>
+            <!-- Add -->
+            <input *ngIf="addUser" type="text" class="form-control" id="fieldOfStudy" placeholder="Field of study"
+              formControlName="fieldOfStudy">
+            <!-- View -->
+            <fieldset [disabled]="true">
+              <input *ngIf="viewUsers" type="text" class="form-control" id="fieldOfStudy"
+                formControlName="fieldOfStudy">
+            </fieldset>
+            <!-- Update -->
+            <input *ngIf="updateUsers" type="text" class="form-control" id="fieldOfStudy"
+                formControlName="fieldOfStudy">
+          </div>
+          <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Year</label>
+            <!-- Add -->
+            <input *ngIf="addUser" type="text" class="form-control " id="year" placeholder="Year"
+              formControlName="year">
+            <!-- View -->
+            <fieldset [disabled]="true">
+              <input *ngIf="viewUsers" type="text" class="form-control " id="year"
+                formControlName="year">
+            </fieldset>
+            <!-- Update -->
+            <input *ngIf="updateUsers" type="text" class="form-control " id="year"
+                formControlName="year">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button *ngIf="addUser" type="button" class="btn btn-primary" (click)="addNewUser(userForm.value)"
+        data-bs-dismiss="modal">Add User</button>
+        <button *ngIf="updateUsers" type="button" class="btn btn-primary"
+        (click)="updateDataUser()" data-bs-dismiss="modal">Update User</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete User</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete user <strong> '{{userFullname}}' </strong> ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" (click)="deleteUser()" data-bs-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

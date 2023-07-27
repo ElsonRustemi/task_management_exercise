@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "fullname": "John Doe",
+      "email": "j@d.com",
+      "fieldOfStudy": "CS",
+      "year": "2",
+      "id": 1
+    },
+    {
+      "fullname": "Mary Doe",
+      "email": "m@d.com",
+      "fieldOfStudy": "Science",
+      "year": "2",
+      "id": 2
+    },
+    {
+      "fullname": "Ben Johnson",
+      "email": "b@j.com",
+      "fieldOfStudy": "Agriculture",
+      "year": "3",
+      "id": 3
+    }
+  ]
+}

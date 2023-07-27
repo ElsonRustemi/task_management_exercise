@@ -1,0 +1,4 @@
+
+.bg-body-tertiary {
+    background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+}
