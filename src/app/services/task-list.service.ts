@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { doc, updateDoc, getFirestore } from '@angular/fire/firestore';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class TaskListService {
   constructor(private fireService: AngularFirestore) { }
 
   /**
-   *
+   * Get tasks
    * @returns
    */
   getTasks(): Observable<any> {
@@ -18,7 +19,7 @@ export class TaskListService {
   }
 
   /**
-   *
+   *  Add tasks
    * @param task
    * @returns
    */
@@ -28,30 +29,23 @@ export class TaskListService {
   }
 
   /**
-   *
+   * Update Task/Not working
    * @param task
    * @returns
    */
   updateTask(task: any) {
-    // console.log(task.id);
+    this.fireService.collection('Task')
     return this.fireService.collection('Task').doc(task.id).update(task);
   }
 
   /**
-   *
+   * Delete Task
    * @param id
    * @returns
    */
   deleteTask(id: string) {
-    console.log(id);
+    console.log(this.fireService.collection('Task'));
     return this.fireService.collection('Task').doc(id).delete();
   }
-
-
-  // completeTask() {
-  //   return this.fireService.collection('Task').doc(task.id).;
-  // }
-
-
 
 }

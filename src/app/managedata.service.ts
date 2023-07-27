@@ -40,7 +40,7 @@ export class ManagedataService {
   }
 
   /**
-   *
+   * Delete user
    * @param id
    * @returns
    */

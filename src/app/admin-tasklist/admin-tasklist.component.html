@@ -54,11 +54,16 @@
               (click)="removeCompletionOfStatus(userdata);"
               *ngIf="unCheck">Cancel</button>
           </td>
+          <!-- , (i + ((pagination.currentPage - 1) * pagination.pageSize)) -->
           <td class="text-center"><button class="btn btn-danger"
-              (click)="deleteTask(userdata.id, (i + ((pagination.currentPage - 1) * pagination.pageSize)))">Delete</button></td>
+              (click)="deleteTask(userdata.id)">Delete</button></td>
+              <!-- , (i + ((pagination.currentPage - 1) * pagination.pageSize)), userDataArray -->
           <td class="text-center"><button class="btn btn-primary" type="button" data-bs-toggle="modal"
               data-bs-target="#myModal"
-              (click)="getUserData(userdata, (i + ((pagination.currentPage - 1) * pagination.pageSize)), userDataArray);addTask=false;">Update</button>
+              (click)="
+              getUserData(userdata);
+              addTask=false;">
+              Update</button>
           </td>
         </tr>
       </tbody>

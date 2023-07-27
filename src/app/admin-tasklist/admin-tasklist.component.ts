@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../user.interface';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 import {
@@ -44,7 +44,7 @@ export class AdminTasklistComponent implements OnInit {
   dateFinish?:number;
 
   //
-  updateTaskForm!: object;
+  // updateTaskForm!: object;
 
   // Modal variables
   model?: NgbDateStruct;
@@ -56,14 +56,14 @@ export class AdminTasklistComponent implements OnInit {
 
 
   taskIndex!: number;
+
+  // Var that is populated for displaying the data in the table
   userDataArray!: User[];
 
+  //
   paginationIndex!: number;
 
-  id: any;
-
   constructor(
-    // private serviceUserData: UserDataService,
     private readonly calendar: NgbDatepickerModule,
     private fb: FormBuilder, public formatter: NgbDateParserFormatter,
     private taskList: TaskListService) {
@@ -96,19 +96,17 @@ export class AdminTasklistComponent implements OnInit {
   getTasks() {
     this.taskList.getTasks().subscribe((tasks: any) => {
       this.userDataArray = tasks.map((data: any) => {
-        // console.log(data);
-
-        // console.log(data.payload.doc.data());
-        // this.userDataArray = data.payload.doc.data();
         const taskData = data.payload.doc.data();
         const id = data.payload.doc.id;
+        taskData.id = id;
 
+        // const payload = {id, ...taskData}
+        const payload = taskData;
+        console.log(payload);
 
-        const payload = {id, ...taskData}
         return payload
-      })
-    })
-
+      });
+    });
   }
 
   /**
@@ -143,9 +141,8 @@ export class AdminTasklistComponent implements OnInit {
    * Deletes specific row on click
    * @param i
    */
-  deleteTask(id: string, i: number) {
+  deleteTask(id: string) {
     this.taskList.deleteTask(id);
-    // this.serviceUserData.serviceDeleteTask(i);
   }
 
   // Need to adapt to new solution beacuse it gets only the first row
@@ -153,7 +150,7 @@ export class AdminTasklistComponent implements OnInit {
    * Sets status to 'Completed'
    * @param i
    */
-  completeTask(userdata: any) {
+  completeTask(userdata: User) {
     console.log(userdata);
     let updateTaskForm = userdata;
 
@@ -171,10 +168,6 @@ export class AdminTasklistComponent implements OnInit {
     this.taskList.updateTask(updateTaskFormFinal).then((task: any) => {
       console.log(task);
     })
-
-
-    // this.serviceUserData.serviceCompleteTask(this.paginationIndex);
-
   }
 
   // Need to adapt to new solution beacuse it gets only the first row
@@ -182,7 +175,7 @@ export class AdminTasklistComponent implements OnInit {
    * Sets status to 'Undefined'
    * @param i
    */
-  removeCompletionOfStatus(userdata:any) {
+  removeCompletionOfStatus(userdata:User) {
     let updateTaskForm = userdata;
     console.log(updateTaskForm);
 
@@ -201,7 +194,6 @@ export class AdminTasklistComponent implements OnInit {
     this.taskList.updateTask(updateTaskFormFinal).then((task: any) => {
       console.log(task);
     })
-    // this.serviceUserData.servisUncomplete(i);
   }
 
   /**
@@ -237,9 +229,7 @@ export class AdminTasklistComponent implements OnInit {
    * and for giving values to taskForm for update function
    * @param userdata
    */
-  getUserData(userdata: User, i: number, id: any) {
-    // console.log(userdata);
-
+  getUserData(userdata: User) {
 
     const first_start_date = new Date(userdata.start_date);
     const start_date = new DatePipe('en-US').transform(first_start_date, 'yyyy-MM-dd');
@@ -275,7 +265,7 @@ export class AdminTasklistComponent implements OnInit {
       status: userdata.status
     });
 
-    this.taskIndex = i;
+    // this.taskIndex = i;
 
   }
 
@@ -304,11 +294,7 @@ export class AdminTasklistComponent implements OnInit {
     }
 
 
-    this.taskList.updateTask(updateTaskFormFinal).then((task: any) => {
-      console.log(task);
-    })
-
-    // this.serviceUserData.serviceUpdateTask(this.taskIndex, updateTaskFormFinal);
+    this.taskList.updateTask(updateTaskFormFinal).then((task: any) => { });
     this.taskForm.reset();
   }
 
