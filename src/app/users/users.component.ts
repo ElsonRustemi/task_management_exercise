@@ -3,6 +3,14 @@ import { ManagedataService } from '../managedata.service';
 
 import { User } from '../models/user';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { UserAuthService } from '../services/user-auth.service';
+
+
+interface UserAuth {
+  // displayName: string;
+  email: string;
+  // Add other properties as needed
+}
 
 @Component({
   selector: 'app-users',
@@ -25,8 +33,13 @@ export class UsersComponent implements OnInit {
 
   userFullname!: string;
 
+  userAuthTest: UserAuth[] = [];
 
-  constructor(private managmentDataService: ManagedataService, private fb: FormBuilder) {
+
+  constructor(
+    private managmentDataService: ManagedataService,
+    private fb: FormBuilder,
+    private userAuth: UserAuthService) {
     this.userForm = this.fb.group({
       fullname: [''],
       email: [''],
@@ -36,7 +49,21 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUsers();
+    // this.getUsers();
+    this.userAuth.getUsers().subscribe((user: any) => {
+      console.log(user);
+
+      if (user) {
+        const userData: UserAuth = {
+          // displayName: user.displayName,
+          email: user.email
+          // Add other properties if needed
+        };
+        this.userAuthTest.push(userData);
+        console.log(this.userAuthTest);
+
+      }
+    });
   }
 
 
