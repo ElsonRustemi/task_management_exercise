@@ -169,21 +169,36 @@
             <div class="mb-3">
               <label for="basic-url" class="form-label">Department</label>
 
-              <input *ngIf="addTask===false" type="text" class="form-control" placeholder="Department"
-                aria-label="Department" formControlName="department">
-
-              <input *ngIf="addTask" type="text" class="form-control" placeholder="Department" aria-label="Department"
+                <select *ngIf="addTask===false" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
                 formControlName="department">
+                <option value="" *ngFor="let department of departments" [ngValue]="department">
+                  {{ department }}
+                </option>
+              </select>
+
+              <select *ngIf="addTask" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                formControlName="department">
+                <option value="" *ngFor="let department of departments" [ngValue]="department">
+                  {{ department }}
+                </option>
+              </select>
             </div>
 
             <div class="mb-3">
               <label for="basic-url" class="form-label">Assigned To</label>
-
-              <input *ngIf="addTask===false" type="text" class="form-control" placeholder="Assigned to"
-                aria-label="Assigned to" formControlName="assignedTo">
-
-              <input *ngIf="addTask" type="text" class="form-control" placeholder="Assigned to" aria-label="Assigned to"
+              <select *ngIf="addTask===false" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
                 formControlName="assignedTo">
+                <option value="" *ngFor="let assigned of assignedTo" [ngValue]="assigned">
+                  {{ assigned }}
+                </option>
+              </select>
+
+              <select *ngIf="addTask" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                formControlName="assignedTo">
+                <option value="" *ngFor="let assigned of assignedTo" [ngValue]="assigned">
+                  {{ assigned }}
+                </option>
+              </select>
             </div>
 
             <div class="mb-3">

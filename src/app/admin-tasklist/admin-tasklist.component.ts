@@ -53,6 +53,8 @@ export class AdminTasklistComponent implements OnInit {
   // Arrays with values used on dropdown
   options: string[] = [];
   statuses: string[] = [];
+  assignedTo: string[] = [];
+  departments: string[] = [];
 
 
   taskIndex!: number;
@@ -79,6 +81,20 @@ export class AdminTasklistComponent implements OnInit {
       'Completed',
       'Ongoing',
       'Overdue'
+    ]
+
+    this.assignedTo = [
+      'Mark',
+      'Ben',
+      'Joe'
+    ]
+
+    this.departments = [
+      'Finance',
+      'IT',
+      'Software Development',
+      'Marketing',
+      'Data Management'
     ]
   }
 
