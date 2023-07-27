@@ -19,6 +19,11 @@ import { LoginComponent } from './login/login.component';
 import { CardComponent } from './card/card.component';
 import { UsersComponent } from './users/users.component';
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { environment } from 'src/environments/environment.prod';
+
 
 @NgModule({
   declarations: [
@@ -40,6 +45,12 @@ import { UsersComponent } from './users/users.component';
     BrowserModule,
     NgbModule,
     AppRoutingModule,
+    AppRoutingModule,
+
+
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

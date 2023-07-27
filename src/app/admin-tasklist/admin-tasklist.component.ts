@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
-import { UserDataService } from '../user-data.service';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../user.interface';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 import {
   NgbDateParserFormatter,
   NgbDatepickerModule,
   NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { TaskListService } from '../services/task-list.service';
 
 @Component({
   selector: 'app-admin-tasklist',
@@ -23,6 +23,7 @@ export class AdminTasklistComponent implements OnInit {
 
   // FormGroup used to update values
   taskForm: FormGroup = this.fb.group({
+    id: [''],
     subject: [''],
     priority: [''],
     start_date: [''],
@@ -43,7 +44,7 @@ export class AdminTasklistComponent implements OnInit {
   dateFinish?:number;
 
   //
-  updateTaskForm!: object;
+  // updateTaskForm!: object;
 
   // Modal variables
   model?: NgbDateStruct;
@@ -55,14 +56,17 @@ export class AdminTasklistComponent implements OnInit {
 
 
   taskIndex!: number;
+
+  // Var that is populated for displaying the data in the table
   userDataArray!: User[];
 
+  //
   paginationIndex!: number;
 
   constructor(
-    private serviceUserData: UserDataService,
     private readonly calendar: NgbDatepickerModule,
-    private fb: FormBuilder, public formatter: NgbDateParserFormatter) {
+    private fb: FormBuilder, public formatter: NgbDateParserFormatter,
+    private taskList: TaskListService) {
 
     this.options = [
       "HIGH",
@@ -83,15 +87,26 @@ export class AdminTasklistComponent implements OnInit {
    */
   ngOnInit() {
     this.getTasks();
+
   }
 
   /**
    * Get Tasks
    */
   getTasks() {
-    this.userDataArray = this.serviceUserData.userInfo;
-    console.log(this.userDataArray);
-    return this.userDataArray;
+    this.taskList.getTasks().subscribe((tasks: any) => {
+      this.userDataArray = tasks.map((data: any) => {
+        const taskData = data.payload.doc.data();
+        const id = data.payload.doc.id;
+        taskData.id = id;
+
+        // const payload = {id, ...taskData}
+        const payload = taskData;
+        console.log(payload);
+
+        return payload
+      });
+    });
   }
 
   /**
@@ -117,7 +132,7 @@ export class AdminTasklistComponent implements OnInit {
       status: updateTaskForm.status
     }
 
-    this.serviceUserData.serviceAddTask(updateTaskFormFinal);
+    this.taskList.createTask(updateTaskFormFinal).then(task => { })
     this.taskForm.reset();
   }
 
@@ -126,24 +141,59 @@ export class AdminTasklistComponent implements OnInit {
    * Deletes specific row on click
    * @param i
    */
-  deleteTask(i: number) {
-    this.serviceUserData.serviceDeleteTask(i);
+  deleteTask(id: string) {
+    this.taskList.deleteTask(id);
   }
 
+  // Need to adapt to new solution beacuse it gets only the first row
   /**
    * Sets status to 'Completed'
    * @param i
    */
-  completeTask() {
-    this.serviceUserData.serviceCompleteTask(this.paginationIndex);
+  completeTask(userdata: User) {
+    console.log(userdata);
+    let updateTaskForm = userdata;
+
+    let updateTaskFormFinal = {
+      id: updateTaskForm.id,
+      subject: updateTaskForm.subject,
+      priority: updateTaskForm.priority,
+      start_date: userdata.start_date,
+      finish_date: userdata.finish_date,
+      department: updateTaskForm.department,
+      assignedTo: updateTaskForm.assignedTo,
+      status: 'Completed'
+    }
+
+    this.taskList.updateTask(updateTaskFormFinal).then((task: any) => {
+      console.log(task);
+    })
   }
 
+  // Need to adapt to new solution beacuse it gets only the first row
   /**
    * Sets status to 'Undefined'
    * @param i
    */
-  removeCompletionOfStatus(i: number) {
-    this.serviceUserData.servisUncomplete(i);
+  removeCompletionOfStatus(userdata:User) {
+    let updateTaskForm = userdata;
+    console.log(updateTaskForm);
+
+
+    let updateTaskFormFinal = {
+      id: updateTaskForm.id,
+      subject: updateTaskForm.subject,
+      priority: updateTaskForm.priority,
+      start_date: userdata.start_date,
+      finish_date: userdata.finish_date,
+      department: updateTaskForm.department,
+      assignedTo: updateTaskForm.assignedTo,
+      status: 'Pending'
+    }
+
+    this.taskList.updateTask(updateTaskFormFinal).then((task: any) => {
+      console.log(task);
+    })
   }
 
   /**
@@ -179,7 +229,7 @@ export class AdminTasklistComponent implements OnInit {
    * and for giving values to taskForm for update function
    * @param userdata
    */
-  getUserData(userdata: User, i: number) {
+  getUserData(userdata: User) {
 
     const first_start_date = new Date(userdata.start_date);
     const start_date = new DatePipe('en-US').transform(first_start_date, 'yyyy-MM-dd');
@@ -205,6 +255,7 @@ export class AdminTasklistComponent implements OnInit {
     this.dateFinish = dateFinish;
 
     this.taskForm.setValue({
+      id: userdata.id,
       subject: userdata.subject,
       priority: userdata.priority,
       start_date: {day: dateStart, month:monthStart, year:yearStart},
@@ -214,7 +265,7 @@ export class AdminTasklistComponent implements OnInit {
       status: userdata.status
     });
 
-    this.taskIndex = i;
+    // this.taskIndex = i;
 
   }
 
@@ -232,6 +283,7 @@ export class AdminTasklistComponent implements OnInit {
     let updateTaskForm = this.taskForm.value;
 
     let updateTaskFormFinal = {
+      id: updateTaskForm.id,
       subject: updateTaskForm.subject,
       priority: updateTaskForm.priority,
       start_date: start_date,
@@ -241,7 +293,8 @@ export class AdminTasklistComponent implements OnInit {
       status: updateTaskForm.status
     }
 
-    this.serviceUserData.serviceUpdateTask(this.taskIndex, updateTaskFormFinal);
+
+    this.taskList.updateTask(updateTaskFormFinal).then((task: any) => { });
     this.taskForm.reset();
   }
 
