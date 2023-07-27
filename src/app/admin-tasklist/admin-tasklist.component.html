@@ -44,20 +44,26 @@
           <td class="text-center">{{userdata.status}}</td>
           <td *ngIf="userdata?.status === 'Pending' ||
           userdata?.status === 'Ongoing' || userdata?.status === 'Overdue'" class="text-center">
-            <button class="btn btn-success" *ngIf="completedTask" (click)="paginationIndex = (i + ((pagination.currentPage - 1) * pagination.pageSize)); completeTask();
+            <button class="btn btn-success" *ngIf="completedTask" (click)="paginationIndex = (i + ((pagination.currentPage - 1) * pagination.pageSize)); completeTask(userdata);
                   unCheck=true;">Confirm</button>
           </td>
           <td *ngIf="userdata?.status === 'Completed'" class="text-center">
             <!-- <td *ngIf="userdata?.status !== 'Undefined'" class="text-center"> -->
+              <!-- , (i + ((pagination.currentPage - 1) * pagination.pageSize)) -->
             <button class="btn btn-secondary"
-              (click)="removeCompletionOfStatus((i + ((pagination.currentPage - 1) * pagination.pageSize)));"
+              (click)="removeCompletionOfStatus(userdata);"
               *ngIf="unCheck">Cancel</button>
           </td>
+          <!-- , (i + ((pagination.currentPage - 1) * pagination.pageSize)) -->
           <td class="text-center"><button class="btn btn-danger"
-              (click)="deleteTask((i + ((pagination.currentPage - 1) * pagination.pageSize)))">Delete</button></td>
+              (click)="deleteTask(userdata.id)">Delete</button></td>
+              <!-- , (i + ((pagination.currentPage - 1) * pagination.pageSize)), userDataArray -->
           <td class="text-center"><button class="btn btn-primary" type="button" data-bs-toggle="modal"
               data-bs-target="#myModal"
-              (click)="getUserData(userdata, (i + ((pagination.currentPage - 1) * pagination.pageSize)));">Update</button>
+              (click)="
+              getUserData(userdata);
+              addTask=false;">
+              Update</button>
           </td>
         </tr>
       </tbody>
