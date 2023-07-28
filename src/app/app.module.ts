@@ -23,6 +23,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from 'src/environments/environment.prod';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { environment } from 'src/environments/environment.prod';
     PaginationComponent,
     LoginComponent,
     CardComponent,
-    UsersComponent
+    UsersComponent,
+    SignUpComponent
   ],
   imports: [
     HttpClientModule,
