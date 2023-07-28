@@ -7,6 +7,9 @@ import { Observable, from, of } from 'rxjs';
 })
 export class AuthenticationService {
 
+  // Test
+  // isLoggedIn: boolean = false;
+
   constructor(private auth: AngularFireAuth) { }
 
   async signUpUser(params: Signup) {
