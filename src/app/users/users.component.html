@@ -11,42 +11,25 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <!-- <th scope="col" class="text-center">Fullname</th>
-          <th scope="col" class="text-center">Email</th>
-          <th scope="col" class="text-center">Field of study</th>
-          <th scope="col" class="text-center">Year</th>
-          <th scope="col" class="text-center">View</th>
-          <th scope="col" class="text-center">Update</th>
-          <th scope="col" class="text-center">Delete</th> -->
-          <!-- <th>UID</th> -->
-          <!-- <th>Name</th> -->
-          <th>Email</th>
+          <th>Fullname</th>
+          <th>View</th>
+          <th>Update</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
-        <!-- <tr *ngFor="let user of users; let i = index;"> -->
           <tr *ngFor="let user of userAuthTest; let i = index;">
-          <!-- <td class="text-center">{{user.fullname}}</td>
-          <td class="text-center">{{user.email}}</td>
-          <td class="text-center">{{user.fieldOfStudy}}</td>
-          <td class="text-center">{{user.year}}</td> -->
-          <!-- <td>{{user.uid}}</td> -->
-          <!-- <td>{{user.displayName}}</td> -->
-          <td>{{user.email}}</td>
-          <!-- <td class="text-center">
-            <button type="button" class="btn btn-info"
-            (click)="viewUsers=true;addUser=false;updateUsers=false;viewUserData(user);"
-              data-bs-toggle="modal" data-bs-target="#userModal">View</button>
+          <td>{{user.fullname}}</td>
+          <td>
+            <button type="button" class="btn btn-info">View</button>
           </td>
-          <td class="text-center">
-            <button type="button" class="btn btn-primary"
-            (click)="updateUsers=true; addUser=false; viewUsers=false; updateUserRecord(user, i);"
-            data-bs-toggle="modal" data-bs-target="#userModal">Update</button>
+          <td>
+            <button type="button" class="btn btn-primary">Update</button>
           </td>
-          <td class="text-center">
-            <button type="button" class="btn btn-danger" (click)="deleteUserModal(i, user.fullname)"
-            data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
-          </td> -->
+          <td>
+            <button type="button" class="btn btn-danger">Delete</button>
+
+          </td>
         </tr>
       </tbody>
     </table>
@@ -76,48 +59,6 @@
             </fieldset>
             <!-- Update -->
             <input *ngIf="updateUsers" type="text" class="form-control " id="fullname" formControlName="fullname">
-          </div>
-          <div class="mb-3">
-            <label for="formGroupExampleInput" class="form-label">Email</label>
-            <!-- Add -->
-            <input *ngIf="addUser" type="email" class="form-control " id="email" placeholder="Email"
-              formControlName="email">
-            <!-- View -->
-            <fieldset [disabled]="true">
-              <input *ngIf="viewUsers" type="email" class="form-control " id="email"
-                formControlName="email">
-            </fieldset>
-            <!-- Update -->
-            <input *ngIf="updateUsers" type="email" class="form-control " id="email"
-                formControlName="email">
-          </div>
-          <div class="mb-3">
-            <label for="formGroupExampleInput" class="form-label">Field of study</label>
-            <!-- Add -->
-            <input *ngIf="addUser" type="text" class="form-control" id="fieldOfStudy" placeholder="Field of study"
-              formControlName="fieldOfStudy">
-            <!-- View -->
-            <fieldset [disabled]="true">
-              <input *ngIf="viewUsers" type="text" class="form-control" id="fieldOfStudy"
-                formControlName="fieldOfStudy">
-            </fieldset>
-            <!-- Update -->
-            <input *ngIf="updateUsers" type="text" class="form-control" id="fieldOfStudy"
-                formControlName="fieldOfStudy">
-          </div>
-          <div class="mb-3">
-            <label for="formGroupExampleInput" class="form-label">Year</label>
-            <!-- Add -->
-            <input *ngIf="addUser" type="text" class="form-control " id="year" placeholder="Year"
-              formControlName="year">
-            <!-- View -->
-            <fieldset [disabled]="true">
-              <input *ngIf="viewUsers" type="text" class="form-control " id="year"
-                formControlName="year">
-            </fieldset>
-            <!-- Update -->
-            <input *ngIf="updateUsers" type="text" class="form-control " id="year"
-                formControlName="year">
           </div>
         </form>
       </div>

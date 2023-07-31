@@ -40,19 +40,35 @@ export class LoginComponent implements OnInit {
     return this.signUpForm?.controls;
   }
 
+  // async signUp() {
+  //   if (this.signUpForm?.valid) {
+  //     const user = await this.auth.signUpUser({
+  //       email: this.signUpForm.value.email,
+  //       password: this.signUpForm.value.password
+  //     }).catch((error) => {
+  //       console.log(error);
+  //     })
+  //     if(user) {
+  //       this.router.navigate(['home']);
+  //     } else {
+  //       console.log("Please provide the correct information.");
+
+  //     }
+  //   }
+  // }
+
   async signUp() {
     if (this.signUpForm?.valid) {
-      const user = await this.auth.signUpUser({
-        email: this.signUpForm.value.email,
-        password: this.signUpForm.value.password
-      }).catch((error) => {
-        console.log(error);
-      })
-      if(user) {
-        this.router.navigate(['home']);
-      } else {
-        console.log("Please provide the correct information.");
+      try {
+        const user = await this.auth.signUpUser({
+          email: this.signUpForm.value.email,
+          password: this.signUpForm.value.password,
+          fullname: this.signUpForm.value.fullname // Assuming you have a 'bio' field in the form
+        });
 
+        this.router.navigate(['home']);
+      } catch (error) {
+        console.log("Please provide the correct information.");
       }
     }
   }

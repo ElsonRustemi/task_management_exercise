@@ -7,9 +7,7 @@ import { UserAuthService } from '../services/user-auth.service';
 
 
 interface UserAuth {
-  // displayName: string;
-  email: string;
-  // Add other properties as needed
+  fullname: string;
 }
 
 @Component({
@@ -49,20 +47,15 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getUsers();
     this.userAuth.getUsers().subscribe((user: any) => {
-      console.log(user);
-
-      if (user) {
-        const userData: UserAuth = {
-          // displayName: user.displayName,
-          email: user.email
-          // Add other properties if needed
-        };
-        this.userAuthTest.push(userData);
-        console.log(this.userAuthTest);
-
-      }
+      this.userAuthTest = user.map((data: any) => {
+        const taskData = data.payload.doc.data();
+        const id = data.payload.doc.id;
+        taskData.id = id;
+        const payload = taskData;
+        console.log(payload);
+        return payload
+      });
     });
   }
 

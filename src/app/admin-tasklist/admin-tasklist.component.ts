@@ -8,6 +8,12 @@ import {
   NgbDatepickerModule,
   NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { TaskListService } from '../services/task-list.service';
+import { AuthenticationService } from '../services/authentication.service';
+import { UserAuthService } from '../services/user-auth.service';
+
+interface UserAuth {
+  fullname: string;
+}
 
 @Component({
   selector: 'app-admin-tasklist',
@@ -65,10 +71,15 @@ export class AdminTasklistComponent implements OnInit {
   //
   paginationIndex!: number;
 
+  userAuthTest: UserAuth[] = [];
+  userFullname: any;
+
   constructor(
     private readonly calendar: NgbDatepickerModule,
     private fb: FormBuilder, public formatter: NgbDateParserFormatter,
-    private taskList: TaskListService) {
+    private taskList: TaskListService, private userAuth: UserAuthService) {
+
+
 
     this.options = [
       "HIGH",
@@ -83,11 +94,9 @@ export class AdminTasklistComponent implements OnInit {
       'Overdue'
     ]
 
-    this.assignedTo = [
-      'Mark',
-      'Ben',
-      'Joe'
-    ]
+
+
+
 
     this.departments = [
       'Finance',
@@ -103,7 +112,7 @@ export class AdminTasklistComponent implements OnInit {
    */
   ngOnInit() {
     this.getTasks();
-
+    this.getUsers();
   }
 
   /**
@@ -115,11 +124,28 @@ export class AdminTasklistComponent implements OnInit {
         const taskData = data.payload.doc.data();
         const id = data.payload.doc.id;
         taskData.id = id;
-
         // const payload = {id, ...taskData}
         const payload = taskData;
         console.log(payload);
+        return payload
+      });
+    });
+  }
 
+  /**
+   *
+   */
+  getUsers() {
+    this.userAuth.getUsers().subscribe((user: any) => {
+      this.userAuthTest = user.map((data: any) => {
+        const userData = data.payload.doc.data();
+        // console.log(userData.fullname);
+        this.userFullname = userData.fullname;
+        const id = data.payload.doc.id;
+        userData.id = id;
+        this.assignedTo.push(this.userFullname);
+        const payload = userData;
+        console.log(payload);
         return payload
       });
     });

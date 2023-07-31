@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, from, of } from 'rxjs';
 
 @Injectable({
@@ -7,13 +8,33 @@ import { Observable, from, of } from 'rxjs';
 })
 export class AuthenticationService {
 
+  signUpForm: any;
+
   // Test
   // isLoggedIn: boolean = false;
 
-  constructor(private auth: AngularFireAuth) { }
+  constructor(private auth: AngularFireAuth, private fireService: AngularFirestore) { }
 
   async signUpUser(params: Signup) {
-    return await this.auth.createUserWithEmailAndPassword(params.email, params.password);
+    // return await this.auth.createUserWithEmailAndPassword(params.email, params.password)
+
+    try {
+      const data = await this.auth.createUserWithEmailAndPassword(
+        params.email,
+        params.password
+      );
+
+      // Create a document in the 'users' collection with the user's UID
+      await this.fireService.collection('users').doc(data?.user?.uid).set({
+        fullname: params.fullname // assuming you have the bio in the Signup interface
+      });
+
+      return data.user;
+    } catch (error) {
+      // Handle errors if needed
+      console.log(error);
+      throw error;
+    }
   }
 
   async login(params: Login) {
@@ -48,6 +69,7 @@ export class AuthenticationService {
 type Signup = {
   email: string;
   password: string;
+  fullname: string;
 }
 
 type Login = {
