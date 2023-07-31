@@ -4,6 +4,22 @@
 
 <div class="position-absolute top-50 start-50 translate-middle">
   <div class="d-flex justify-content-center" (click)="navigateComponent()">
+    <mat-card class="mx-2 w-50"
+      *ngFor="let item of items; let i = index;" (click)="itemClicked = item;" style="cursor: pointer;">
+      <mat-card-header>
+        <mat-card-title>{{item.title}}</mat-card-title>
+        <mat-card-subtitle>{{item.subtitle}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        {{item.description}}
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<br>
+
+<!-- <div class="position-absolute top-50 start-50 translate-middle">
+  <div class="d-flex justify-content-center" (click)="navigateComponent()">
     <div class="card mx-2 w-50" style="width: 18rem;"
       *ngFor="let item of items; let i = index;" (click)="itemClicked = item;" style="cursor: pointer;">
       <div class="card-body">
@@ -13,4 +29,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
