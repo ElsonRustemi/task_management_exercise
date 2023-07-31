@@ -31,7 +31,6 @@
         : (pagination.currentPage - 1) * pagination.pageSize
         : (pagination.currentPage - 1) * pagination.pageSize + pagination.pageSize ; let i = index;"
           [style.background-color]="returnData(i + ((pagination.currentPage - 1) * pagination.pageSize))">
-
           <td scope="row" class="text-center"> {{i + ((pagination.currentPage - 1) * pagination.pageSize) + 1}}</td>
           <td scope="row" class="text-start">{{userdata.subject}}</td>
           <td class="text-center" style="font-weight: bold;"
