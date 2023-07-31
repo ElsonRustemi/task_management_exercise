@@ -9,6 +9,7 @@ import {
   NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { TaskListService } from '../services/task-list.service';
 
+
 @Component({
   selector: 'app-admin-tasklist',
   templateUrl: './admin-tasklist.component.html',
@@ -151,7 +152,6 @@ export class AdminTasklistComponent implements OnInit {
     this.taskList.createTask(updateTaskFormFinal).then(task => { })
     this.taskForm.reset();
   }
-
 
   /**
    * Deletes specific row on click
