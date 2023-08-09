@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ManagedataService } from '../managedata.service';
 
 import { User } from '../models/user';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserAuthService } from '../services/user-auth.service';
+import { MatTableDataSource } from '@angular/material/table';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 
 
 interface UserAuth {
@@ -15,7 +17,9 @@ interface UserAuth {
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, AfterViewInit {
+
+  displayedColumns: string[] = ['fullname', 'view', 'update', 'delete']
 
   users!: User[];
   userForm!: FormGroup;
@@ -33,6 +37,13 @@ export class UsersComponent implements OnInit {
 
   userAuthTest: UserAuth[] = [];
 
+  test: any;
+
+  // Material table datasource
+  dataSource!: any;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
 
   constructor(
     private managmentDataService: ManagedataService,
@@ -46,17 +57,42 @@ export class UsersComponent implements OnInit {
     })
   }
 
+  ngAfterViewInit() {
+    // this.dataSource.paginator = this.paginator;
+  }
+
   ngOnInit(): void {
     this.userAuth.getUsers().subscribe((user: any) => {
-      this.userAuthTest = user.map((data: any) => {
-        const taskData = data.payload.doc.data();
-        const id = data.payload.doc.id;
-        taskData.id = id;
-        const payload = taskData;
-        console.log(payload);
-        return payload
-      });
+      
+      this.dataSource = new MatTableDataSource(
+        this.userAuthTest = user.map((data: any) => {
+          const taskData = data.payload.doc.data();
+          const id = data.payload.doc.id;
+          taskData.id = id;
+          const payload = taskData;
+          this.test = payload
+          console.log(payload);
+          return payload
+        })
+      );
+
+      // this.userAuthTest = user.map((data: any) => {
+      //   const taskData = data.payload.doc.data();
+      //   const id = data.payload.doc.id;
+      //   taskData.id = id;
+      //   const payload = taskData;
+      //   this.test = payload
+      //   console.log(payload);
+      //   return payload
+      // });
+
+
+      
     });
+    
+
+
+
   }
 
 
